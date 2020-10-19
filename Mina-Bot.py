@@ -1,9 +1,10 @@
 # ~~~~~~~~~~~~~~~~~TECH DETAILS~~~~~~~~~~~~~~~~ #
 # Modules
-import discord
 import logging
-import requests
 import time
+
+import discord
+import requests
 from discord.ext import commands
 from tinydb import TinyDB, Query
 from tinydb.operations import increment
@@ -26,7 +27,6 @@ logger.addHandler(handler)
 discord_file = open("Discord Token.txt", "r")
 discord_token = discord_file.read()
 discord_file.close()
-
 
 # Battle Metrics Token
 battle_metrics_file = open("BM Token.txt", "r")
