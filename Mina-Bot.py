@@ -16,11 +16,8 @@ userID = Query()
 # Discord Logging
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename='discord.log',
-                              encoding='utf-8',
-                              mode='w')
-handler.setFormatter(
-    logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
 # Discord Token
@@ -35,10 +32,8 @@ battle_metrics_file.close()
 
 # Requests Header
 payload = {}
-headers = {
-    "Authorization": f"Bearer {battle_metrics_token}",
-    "Cookie": "__cfduid=d4bc6663b40ad3eb1215edff4e85ecfe61600021272",
-}
+headers = {"Authorization": f"Bearer {battle_metrics_token}",
+           "Cookie": "__cfduid""=d4bc6663b40ad3eb1215edff4e85ecfe61600021272", }
 
 
 # ~~~~~~~~~~~~~FUNCTIONS~~~~~~~~~~~~ #
@@ -147,8 +142,7 @@ def voice_connect(discord_id):
 def voice_disconnect(discord_id):
     try:
         temp_end_time = time.time()
-        temp_start_time = db.get(
-            userID.discord_id == 113077928257912832).get("temp_start_time")
+        temp_start_time = db.get(userID.discord_id == 113077928257912832).get("temp_start_time")
         voice_time = temp_end_time - temp_start_time
         update_discord_time(discord_id, voice_time)
         return
@@ -265,12 +259,8 @@ async def invite(ctx, code, region):
         embed.add_field(name="**__Party Size__**",
                         value=f"**{room_size} / {room_limit}**",
                         inline=True)
-        embed.add_field(name="__Room Code & Region__**",
-                        value=f"**{code} || {region}**",
-                        inline=True)
-        embed.set_footer(
-            text="Post your party here. Simply do !invite or post an invite link. (INV)"
-        )
+        embed.add_field(name="__Room Code & Region__**", value=f"**{code} || {region}**", inline=True)
+        embed.set_footer(text="Post your party here. Simply do !invite or post an invite link. (INV)")
         await ctx.message.delete()
         await ctx.send(embed=embed)
     else:
