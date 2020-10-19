@@ -4,7 +4,6 @@ import discord
 import logging
 import requests
 import time
-import os
 from discord.ext import commands
 from tinydb import TinyDB, Query
 from tinydb.operations import increment
@@ -146,12 +145,15 @@ def voice_connect(discord_id):
 
 # voiceDisconnect Function
 def voice_disconnect(discord_id):
-    temp_end_time = time.time()
-    temp_start_time = db.get(
-        userID.discord_id == 113077928257912832).get("temp_start_time")
-    voice_time = temp_end_time - temp_start_time
-    update_discord_time(discord_id, voice_time)
-    return
+    try:
+        temp_end_time = time.time()
+        temp_start_time = db.get(
+            userID.discord_id == 113077928257912832).get("temp_start_time")
+        voice_time = temp_end_time - temp_start_time
+        update_discord_time(discord_id, voice_time)
+        return
+    except AttributeError:
+        return
 
 
 # update discord_time
@@ -191,13 +193,13 @@ async def on_voice_state_update(member, before, after):
     if not hasattr(before.channel, 'id') and hasattr(after.channel,
                                                      'id'):
         voice_connect(discord_id)
-        print(f"{discord_id} connected to {after.channel}({after.channel.id})!")
+        print(f"{member}({discord_id}) connected to {after.channel}({after.channel.id})!")
     else:
         if hasattr(before.channel, 'id') and not hasattr(
                 after.channel, 'id'):
             voice_disconnect(discord_id)
             print(
-                f"{discord_id} disconnected from {before.channel} ({before.channel.id})!"
+                f"{member}{discord_id} disconnected from {before.channel} ({before.channel.id})!"
             )
         else:
             return
