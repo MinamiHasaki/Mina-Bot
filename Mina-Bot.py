@@ -4,6 +4,7 @@ import discord
 import logging
 import requests
 import time
+import os
 from discord.ext import commands
 from tinydb import TinyDB, Query
 from tinydb.operations import increment
@@ -23,19 +24,20 @@ handler.setFormatter(
 logger.addHandler(handler)
 
 # Discord Token
-discordToken = open("Discord Token.txt", "r")
-dToken = discordToken.read()
-discordToken.close()
+discord_file = open("Discord Token.txt", "r")
+discord_token = discord_file.read()
+discord_file.close()
+
 
 # Battle Metrics Token
-BMToken = open("BM Token.txt", "r")
-bToken = BMToken.read()
-BMToken.close()
+battle_metrics_file = open("BM Token.txt", "r")
+battle_metrics_token = battle_metrics_file.read()
+battle_metrics_file.close()
 
 # Requests Header
 payload = {}
 headers = {
-    "Authorization": f"Bearer {bToken}",
+    "Authorization": f"Bearer {battle_metrics_token}",
     "Cookie": "__cfduid=d4bc6663b40ad3eb1215edff4e85ecfe61600021272",
 }
 
@@ -281,4 +283,4 @@ async def clear(ctx, amount=10):
 
 
 # Discord Client
-client.run(dToken)
+client.run(discord_token)
