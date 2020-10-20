@@ -22,9 +22,8 @@ class AmongUs(commands.Cog):
             room_limit = ctx.author.voice.channel.user_limit
             embed = discord.Embed(
                 colour=discord.Colour(0x2DC7FF),
-                description=f"[:arrow_right: **Click to join!** :arrow_left:]({room_link})\nIf you want to make your own "
-                            f"party, join a voice channel and type `!invite` right here. "
-            )
+                description=f"[:arrow_right: **Click to join!** :arrow_left:]({room_link})\nIf you want to make your "
+                            f"own party, join a voice channel and type `!invite` right here. ")
             embed.set_author(name=f"{author} is looking for party members!",
                              icon_url=f"{author_avatar}")
             embed.set_thumbnail(url="https://puu.sh/GBPrB/0aee3ee079.png")
