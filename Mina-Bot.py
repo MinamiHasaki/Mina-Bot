@@ -1,8 +1,8 @@
 # Modules
 import logging
+import yaml
 import os
 from discord.ext import commands
-
 
 # Discord Logging
 logger = logging.getLogger('discord')
@@ -43,11 +43,11 @@ async def restart(ctx, extension):
 # Reload All Cogs Command
 @client.command()
 async def reload(ctx):
-    for file in os.listdir("./cogs"):
-        if file.endswith(".py"):
-            client.unload_extension(f"cogs.{file[:-3]}")
-            client.load_extension(f"cogs.{file[:-3]}")
-            await ctx.send(f"`{file[:-3]} loaded!`", delete_after=10)
+    for cog in os.listdir("./cogs"):
+        if cog.endswith(".py"):
+            client.unload_extension(f"cogs.{cog[:-3]}")
+            client.load_extension(f"cogs.{cog[:-3]}")
+            await ctx.send(f"`{cog[:-3]} loaded!`", delete_after=10)
     await ctx.send("`All cogs reloaded!`", delete_after=10)
     await ctx.message.delete(delay=10)
 
@@ -71,9 +71,8 @@ async def on_ready():
 
 
 # Discord Token
-discord_file = open("Discord Token.txt", "r")
-discord_token = discord_file.read()
-discord_file.close()
+with open(r'tokens.yaml') as file:
+    tokens = yaml.load(file, Loader=yaml.FullLoader)
 
 # Runs Bot's Discord Client
-client.run(discord_token)
+client.run(tokens["discord_token"])

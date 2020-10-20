@@ -1,6 +1,6 @@
 # Imported Modules For Cogs
 import time
-
+import yaml
 import discord
 import requests
 from discord.ext import commands
@@ -41,9 +41,9 @@ db = TinyDB('database.json')
 userID = Query()
 
 # Battle Metrics Token
-battle_metrics_file = open("BM Token.txt", "r")
-battle_metrics_token = battle_metrics_file.read()
-battle_metrics_file.close()
+with open(r'tokens.yaml') as file:
+    tokens = yaml.load(file, Loader=yaml.FullLoader)
+battle_metrics_token = tokens["battle_metrics_token"]
 
 # Requests Header
 payload = {}
