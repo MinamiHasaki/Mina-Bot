@@ -15,12 +15,12 @@ class Squad(commands.Cog):
 
     # Example Listener
     @commands.Cog.listener()
-    async def on_member_join(self, member):
+    async def squad(self, member):
         pass
 
     # Example Command
     @commands.command()
-    async def hello(self, ctx):
+    async def squad1(self, ctx):
         pass
 
 
