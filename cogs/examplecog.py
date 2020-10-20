@@ -21,7 +21,7 @@ class ExampleCog(commands.Cog):
 # Called To Load Cog And Connect To Client
 def setup(client):
     client.add_cog(ExampleCog(client))
-    print("ExampleCog unloaded!")
+    print("ExampleCog loaded!")
 
 
 # Called When Cog Is Unloaded

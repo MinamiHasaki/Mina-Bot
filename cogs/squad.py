@@ -27,7 +27,7 @@ class Squad(commands.Cog):
 # Called To Load Cog And Connect To Client
 def setup(client):
     client.add_cog(Squad(client))
-    print("ExampleCog unloaded!")
+    print("Squad loaded!")
 
 
 # Called When Cog Is Unloaded
