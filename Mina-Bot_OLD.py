@@ -256,11 +256,5 @@ async def invite(ctx, code, region):
         await ctx.send("Please join a voice channel first!", delete_after=5)
 
 
-# Clear Command
-@client.command()
-async def clear(ctx, amount=10):
-    await ctx.channel.purge(limit=amount)
-
-
 # Discord Client
 client.run(discord_token)
