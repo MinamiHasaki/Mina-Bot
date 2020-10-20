@@ -7,14 +7,14 @@ class ExampleCog(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    # Example Listener
-    @commands.Cog.listener()
-    async def on_member_join(self, member):
-        pass
-
     # Example Command
     @commands.command()
     async def hello(self, ctx):
+        pass
+
+    # Example Listener
+    @commands.Cog.listener()
+    async def on_member_join(self, member):
         pass
 
 

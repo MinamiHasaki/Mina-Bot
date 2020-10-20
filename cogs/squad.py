@@ -1,6 +1,4 @@
-# ~~~~~~~~~~~~~~~~~TECH DETAILS~~~~~~~~~~~~~~~~ #
-# Modules
-import logging
+# Imported Modules For Cogs
 import time
 
 import discord
@@ -9,21 +7,38 @@ from discord.ext import commands
 from tinydb import TinyDB, Query
 from tinydb.operations import increment
 
+
+# Creates Class For Cog
+class Squad(commands.Cog):
+    def __init__(self, client):
+        self.client = client
+
+    # Example Listener
+    @commands.Cog.listener()
+    async def on_member_join(self, member):
+        pass
+
+    # Example Command
+    @commands.command()
+    async def hello(self, ctx):
+        pass
+
+
+# Called To Load Cog And Connect To Client
+def setup(client):
+    client.add_cog(Squad(client))
+    print("ExampleCog unloaded!")
+
+
+# Called When Cog Is Unloaded
+def teardown():
+    print("ExampleCog unloaded!")
+
+
+# ~~~~~~~~~~~~~~~~~TO BE SORTED~~~~~~~~~~~~~~~~ #
 # TinyDB Database File
 db = TinyDB('database.json')
 userID = Query()
-
-# Discord Logging
-logger = logging.getLogger('discord')
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
-logger.addHandler(handler)
-
-# Discord Token
-discord_file = open("Discord Token.txt", "r")
-discord_token = discord_file.read()
-discord_file.close()
 
 # Battle Metrics Token
 battle_metrics_file = open("BM Token.txt", "r")
@@ -219,7 +234,3 @@ async def sync(ctx, steam_id):
 @client.command(aliases=["time"])
 async def check_battle_metrics_time(ctx, steam_id):
     await ctx.send(get_battlemetrics_id(steam_id))
-
-
-# Discord Client
-client.run(discord_token)
