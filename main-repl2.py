@@ -3,7 +3,9 @@ import os
 import discord
 from discord.ext import commands
 
-client = commands.Bot(command_prefix="!")
+client = commands.Bot(command_prefix="!", case_insensitive=True)
+
+client.author_id = 113077928257912832
 
 
 @client.command()
@@ -20,9 +22,12 @@ async def unload(ctx, extension):
 
 @client.command()
 async def reload(ctx, extension):
+  try:
     client.unload_extension(f"cogs.{extension}")
     client.load_extension(f"cogs.{extension}")
     await ctx.send(f"`{extension} reloaded!`")
+  except:
+    await ctx.send(f"{extension} does not exist!")
 
 
 @client.command()
@@ -32,13 +37,17 @@ async def restart(ctx):
             client.unload_extension(f"cogs.{file[:-3]}")
             client.load_extension(f"cogs.{file[:-3]}")
             await ctx.send(f"`{file[:-3]} loaded!`")
-    await ctx.send("`All extensions reloaded!`")
+    await ctx.send(f"`All extensions reloaded!`")
 
 
-for filename in os.listdir("./cogs"):
-    if filename.endswith(".py"):
-        client.load_extension(f"cogs.{filename[:-3]}")
-print("Mina-Bot is ready!")
+extensions = [
+	'cogs.OnReady',
+  'cogs.Ping'
+]
+
+if __name__ == '__main__':
+	for extension in extensions:
+		client.load_extension(extension)
 
 # Discord Token
 discord_file = open("Discord Token.txt", "r")

@@ -7,10 +7,13 @@ class Ping(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command()
-    async def ping(self):
-        await self.send("Pong! " + str(int(self.latency * 1000)) + "ms")
+    @commands.Cog.listener()
+    async def on_ready(self):
         print("Ping is loaded!")
+
+    @commands.command()
+    async def ping(self, ctx):
+        await ctx.send("Pong! " + str(int(self.client.latency * 1000)) + "ms")
 
 
 def setup(client):
