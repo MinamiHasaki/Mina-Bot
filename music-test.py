@@ -1,9 +1,9 @@
-# Imported Modules For Cogs
 import asyncio
 import functools
 import itertools
 import math
 import random
+import os
 
 import discord
 import youtube_dl
@@ -14,23 +14,14 @@ from discord.ext import commands
 youtube_dl.utils.bug_reports_message = lambda: ''
 
 
-# Creates Class For Cog
 class VoiceError(Exception):
     pass
 
 
-# Creates Class For Cog
 class YTDLError(Exception):
     pass
 
 
-# Creates Class For Cog
-class YTMusic(commands.Cog):
-    def __init__(self, client):
-        self.client = client
-
-
-# Creates Class For Cog
 class YTDLSource(discord.PCMVolumeTransformer):
     YTDL_OPTIONS = {
         'format': 'bestaudio/best',
@@ -140,7 +131,6 @@ class YTDLSource(discord.PCMVolumeTransformer):
         return ', '.join(duration)
 
 
-# Creates Class For Cog
 class Song:
     __slots__ = ('source', 'requester')
 
@@ -161,7 +151,6 @@ class Song:
         return embed
 
 
-# Creates Class For Cog
 class SongQueue(asyncio.Queue):
     def __getitem__(self, item):
         if isinstance(item, slice):
@@ -185,7 +174,6 @@ class SongQueue(asyncio.Queue):
         del self._queue[index]
 
 
-# Creates Class For Cog
 class VoiceState:
     def __init__(self, bot: commands.Bot, ctx: commands.Context):
         self.bot = bot
@@ -267,7 +255,6 @@ class VoiceState:
             self.voice = None
 
 
-# Creates Class For Cog
 class Music(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
@@ -506,12 +493,12 @@ class Music(commands.Cog):
                 raise commands.CommandError('Bot is already in a voice channel.')
 
 
-# Called To Load Cog And Connect To Client
-def setup(client):
-    client.add_cog(YTMusic(client))
-    print("YTMusic loaded!")
+bot = commands.Bot('music.', description='Yet another music bot.')
+bot.add_cog(Music(bot))
 
 
-# Called When Cog Is Unloaded
-def teardown():
-    print("YTMusic unloaded!")
+@bot.event
+async def on_ready():
+    print('Logged in as:\n{0.user.name}\n{0.user.id}'.format(bot))
+
+bot.run(os.getenv("TOKEN"))
